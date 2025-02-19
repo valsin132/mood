@@ -41,7 +41,6 @@ model JournalEntry {
 
 model Analysis {
   id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   entryId String
