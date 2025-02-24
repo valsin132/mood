@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs/dist/types/server'
+import { auth } from '@clerk/nextjs/server'
 import Link from 'next/link'
 
 export default async function Home() {
