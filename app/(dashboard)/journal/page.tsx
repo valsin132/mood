@@ -2,14 +2,7 @@ import { getUserByClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 
 const getEntries = async () => {
-  const users = await prisma.user.findMany()
-  console.log(users)
   const user = await getUserByClerkId()
-
-  if (!user) {
-    console.error('User not found.')
-    return [] // Return an empty array or handle as needed
-  }
 
   const entries = await prisma.journalEntry.findMany({
     where: {

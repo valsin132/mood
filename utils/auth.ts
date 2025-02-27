@@ -3,9 +3,8 @@ import { prisma } from './db'
 
 export const getUserByClerkId = async () => {
   const { userId } = await auth()
-  console.log('Clerk userId from auth():', userId)
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findUniqueOrThrow({
     where: {
       clerkId: userId,
     },
