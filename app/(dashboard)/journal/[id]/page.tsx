@@ -22,7 +22,7 @@ const EntryPage = async ({ params }) => {
     { name: 'Summary', value: '' },
     { name: 'Subject', value: '' },
     { name: 'Mood', value: '' },
-    { name: 'Negative', value: false },
+    
   ]
 
   return (
