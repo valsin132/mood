@@ -37,7 +37,6 @@ const getPrompt = async (content) => {
     entry: content,
   })
 
-  console.log(input)
   return input
 }
 
@@ -50,5 +49,10 @@ export const analyze = async (content) => {
     apiKey: process.env.OPENAI_API_KEY,
   })
   const result = await model.invoke(input)
-  console.log(result)
+
+  if (typeof result.content === 'string') {
+    return parser.parse(result.content)
+  } else {
+    throw new Error('Expected string content but received structured message')
+  }
 }

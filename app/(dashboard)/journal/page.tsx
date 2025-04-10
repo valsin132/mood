@@ -16,8 +16,6 @@ const getEntries = async () => {
     },
   })
 
-  await analyze('today was e eh, ok day I guess. I found a new coffe shop that was cool but then I got a flat tire. :)')
-
   return entries
 }
 

@@ -8,6 +8,12 @@ const NewEntryCard = () => {
 
   const handleOnClick = async () => {
     const data = await createNewEntry()
+
+    if (!data || !data.id) {
+      console.error('Failed to create new entry:', data)
+      return
+    }
+    
     router.push(`/journal/${data.id}`)
   }
 
