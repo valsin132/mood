@@ -50,5 +50,9 @@ export const analyze = async (content) => {
   })
   const result = await model.invoke(input)
 
-  
+  if (typeof result.content === 'string') {
+    return parser.parse(result.content)
+  } else {
+    throw new Error('Expected string content but received structured message')
+  }
 }
