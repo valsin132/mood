@@ -24,7 +24,7 @@ const Question = () => {
         />
         <button
           type="submit"
-          className="bg-blue-400 px-4 py-2 rounded-lg text-xl"
+          className="bg-blue-400 px-4 py-2 rounded-lg text-lg"
         >
           Ask
         </button>
