@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }) => {
           ))}
         </ul>
       </aside>
-      <div className="ml-[200px] h-full">
+      <div className="ml-[300px] h-full">
         <header className="h-[60px] border-b border-black/10">
           <div className="h-full w-full px-6 flex items-center justify-end">
             <UserButton />
