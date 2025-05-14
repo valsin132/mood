@@ -1,6 +1,10 @@
-import { ChatOpenAI } from '@langchain/openai'
+import { ChatOpenAI, OpenAI } from '@langchain/openai'
 import { StructuredOutputParser } from 'langchain/output_parsers'
 import { PromptTemplate } from '@langchain/core/prompts'
+import { Document } from 'langchain/document'
+import { loadQARefineChain } from 'langchain/chains'
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
+import { MemoryVectorStore } from 'langchain/vectorstores/memory'
 import z from 'zod'
 
 const parser = StructuredOutputParser.fromZodSchema(
@@ -55,4 +59,18 @@ export const analyze = async (content) => {
   } else {
     throw new Error('Expected string content but received structured message')
   }
+}
+
+const qa = async (question, entries) => {
+  const docs = entries.map((entry) => {
+    return new Document({
+      pageContent: entry.content,
+      metadata: { id: entry.id, createdAt: entry.createdAt },
+    })
+  })
+
+  const model = new OpenAI({ temperature: 0, modelName: 'gpt-4o-mini' })
+  const chain = loadQARefineChain(model)
+  const embeddings = new OpenAIEmbeddings()
+  const store = MemoryVectorStore.fromDocuments(docs, embeddings)
 }
