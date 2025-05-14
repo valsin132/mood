@@ -3,7 +3,7 @@ import { StructuredOutputParser } from 'langchain/output_parsers'
 import { PromptTemplate } from '@langchain/core/prompts'
 import { Document } from 'langchain/document'
 import { loadQARefineChain } from 'langchain/chains'
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
+import { OpenAIEmbeddings } from '@langchain/openai'
 import { MemoryVectorStore } from 'langchain/vectorstores/memory'
 import z from 'zod'
 
@@ -61,7 +61,7 @@ export const analyze = async (content) => {
   }
 }
 
-const qa = async (question, entries) => {
+export const qa = async (question, entries) => {
   const docs = entries.map((entry) => {
     return new Document({
       pageContent: entry.content,
@@ -69,8 +69,15 @@ const qa = async (question, entries) => {
     })
   })
 
-  const model = new OpenAI({ temperature: 0, modelName: 'gpt-4o-mini' })
+  const model = new ChatOpenAI({ temperature: 0, modelName: 'gpt-4o-mini' })
   const chain = loadQARefineChain(model)
   const embeddings = new OpenAIEmbeddings()
-  const store = MemoryVectorStore.fromDocuments(docs, embeddings)
+  const store = await MemoryVectorStore.fromDocuments(docs, embeddings)
+  const relevantDocs = await store.similaritySearch(question)
+  const res = await chain.invoke({
+    input_documents: relevantDocs,
+    question,
+  })
+
+  return res.output_text
 }
