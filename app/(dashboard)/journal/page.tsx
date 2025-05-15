@@ -1,7 +1,6 @@
 import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
 import Question from '@/components/Question'
-import { analyze } from '@/utils/ai'
 import { getUserByClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 import Link from 'next/link'

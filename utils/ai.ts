@@ -1,4 +1,4 @@
-import { ChatOpenAI, OpenAI } from '@langchain/openai'
+import { ChatOpenAI } from '@langchain/openai'
 import { StructuredOutputParser } from 'langchain/output_parsers'
 import { PromptTemplate } from '@langchain/core/prompts'
 import { Document } from 'langchain/document'
@@ -9,6 +9,11 @@ import z from 'zod'
 
 const parser = StructuredOutputParser.fromZodSchema(
   z.object({
+    sentimentScore: z
+      .number()
+      .describe(
+        'sentiment of the text and rated on a scale from -10 to 10, where -10 is extremely negative, 0 is neutral, and 10 is extremely positive.'
+      ),
     mood: z
       .string()
       .describe('The mood of the person who wrote the journal entry.'),
